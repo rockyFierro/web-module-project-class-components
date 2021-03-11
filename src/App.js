@@ -1,13 +1,15 @@
-  
+
 import React from 'react';
 import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
 import './components/Todo.css';
 class App extends React.Component {
- //took out the constructor and we're still in business!
+  //took out the constructor and we're still in business!
   state = {
-      todos: []
+    todos: []
   }
+
+
   //method to handle the button, get's passed into the form to retrieve input
   addTask = (event, task) => {// addTask(arguments = the event it's attatched to and the text input taken)
     event.preventDefault();//since it's attatched onto the submit event; prevent refresh
@@ -17,6 +19,9 @@ class App extends React.Component {
       id: Date.now(),
       finished: false
     };
+    //add data to local storage
+    localStorage.setItem(String(addTask.id), JSON.stringify(addTask))
+
     this.setState({ //set the state 
       ...this.state,//copy previous state
       todos: [...this.state.todos, addTask]//copy previous todos state and add new object to the array
@@ -30,6 +35,7 @@ class App extends React.Component {
       todos: this.state.todos.map(
         (task) => {
           if (task.id === taskID) {
+            localStorage.removeItem(String(task.id))
             return {
               ...task,
               finished: !task.finished
@@ -41,16 +47,21 @@ class App extends React.Component {
       )
     })
   }
-  
+
   clearFinished = (e) => {
     e.preventDefault();
     this.setState({
       ...this.state,
-      todos: this.state.todos.filter((task) => !task.finished)
+      todos: this.state.todos.filter((task) =>{
+        return !task.finished
+        })
     });
+    
+
   };
-  
+
   render() {
+    console.log(localStorage)
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>

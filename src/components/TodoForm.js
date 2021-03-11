@@ -1,4 +1,4 @@
-  
+
 import React from 'react';
 class TodoForm extends React.Component {
     constructor() {
@@ -14,6 +14,7 @@ class TodoForm extends React.Component {
         });
     }
     handleSubmit = (event) => {
+        
         this.props.addTask(event, this.state.newTask);
         this.setState({
             newTask: ""
@@ -21,17 +22,21 @@ class TodoForm extends React.Component {
     }
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label htmlFor="newTask">
-                    New Task:{' '}
-                    <input
-                        value={this.state.newTask}
-                        onChange={this.handleChange}
-                        name="newTask"
-                        type="text" />
-                </label>
-                <button>Add Additional Task</button>
-            </form>
+            <fieldset>
+                <legend>
+                    <h2>
+                        New Task
+                    </h2>
+                </legend>
+
+                <input
+                    placeholder="Enter Task"
+                    value={this.state.newTask}
+                    onChange={this.handleChange}
+                    name="newTask"
+                    type="text" />
+                <button onClick={this.handleSubmit}>Add Additional Task</button>
+            </fieldset>
         )
     };
 }
